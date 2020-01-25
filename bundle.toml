@@ -1,0 +1,16 @@
+bridges = []
+
+[[instances]]
+name = "holochain_photos"
+id = "__holochain_photos"
+dna_hash = "QmYM4HuzPHxcUzBNtoLMK9KN92YBxpJjkaszsScJu5yw9A"
+uri = "file:dist/holochain_photos.dna.json" 
+
+[[UIs]]
+name = "Holochain Photos"
+id = "holochain_photos_ui"
+uri = "dir:./gui" 
+
+[[UIs.instance_references]]
+ui_handle = "test-instance"
+instance_id = "__holochain_photos"

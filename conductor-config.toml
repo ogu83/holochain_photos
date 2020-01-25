@@ -1,0 +1,61 @@
+bridges = []
+persistence_dir = ''
+
+[[agents]]
+id = 'hc-run-agent'
+keystore_file = 'testAgent'
+name = 'testAgent'
+public_address = 'HcScjN8wBwrn3tuyg89aab3a69xsIgdzmX5P9537BqQZ5A7TEZu7qCY4Xzzjhma'
+test_agent = true
+
+[[dnas]]
+file = 'dist/holochain_photos.dna.json'
+hash = 'QmYM4HuzPHxcUzBNtoLMK9KN92YBxpJjkaszsScJu5yw9A'
+id = '__holochain_photos'
+
+[[instances]]
+agent = 'hc-run-agent'
+dna = '__holochain_photos'
+id = '__holochain_photos'
+
+[instances.storage]
+type = 'memory'
+
+[[interfaces]]
+admin = false
+choose_free_port = false
+id = 'holochain_photos_ui'
+
+[[interfaces.instances]]
+alias = 'test-instance'
+id = '__holochain_photos'
+
+[interfaces.driver]
+port = 50000
+type = 'websocket'
+
+[[ui_bundles]]
+id = 'holochain_photos_ui'
+root_dir = './gui'
+
+[[ui_interfaces]]
+bind_address = '127.0.0.1'
+bundle = 'holochain_photos_ui'
+dna_interface = 'holochain_photos_ui'
+id = 'holochain_photos_ui'
+port = 8888
+reroute_to_root = false
+
+[logger]
+state_dump = true
+type = 'debug'
+
+[logger.rules]
+rules = []
+
+[passphrase_service]
+type = 'cmd'
+
+[signals]
+consistency = false
+trace = false

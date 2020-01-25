@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    
+    <meta charset="utf-8" />
+    <meta name="description" content="Holochain Photos" />
+
+    <link rel="stylesheet" href="index.css">
+    <title>Holochain Photos</title>    
+  </head>
+  <body>
+    <script type="text/javascript" src="hc-web-client/hc-web-client-0.5.1.browser.min.js"></script>
+    <script type="text/javascript" src="holochain_photos.js"></script>
+
+    <div id="alertHolochainError" class="alert alert-warning alert-dismissible" role="alert" hidden>
+        <strong>Holochain</strong> is not working
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div id="alertHolochainSuccess" class="alert alert-success alert-dismissible" role="alert" hidden>
+        <strong>Holochain</strong> is working
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <img height="25px" src="https://forum.holochain.org/uploads/default/original/1X/79f6577e3c8102e1f0caf8d2f43d4fcf472a3e34.png">
+                Holochain Photos
+            </h3>
+        </div>
+        <div class="panel-body">
+            <p id="txtDescription">
+                Upload your photos to holochain, get a sherable link.
+            </p>
+            
+            <div id="divBtnNew" class="form-group btn-group" role="group" hidden>
+                <button id="btnNew" class="btn btn-primary">Upload New Photo</button>
+            </div>
+
+            <div id="frmUpload" class="form-group">
+                <label for="filePhoto">Select your photo</label>
+                <input class="form-control" id="filePhoto" type="file" accept="image/*" />
+                <div class="btn-group" role="group">
+                    <button id="btnUpload" class="btn btn-success">Upload</button>
+                    <button id="btnClear" class="btn btn-danger">Cancel</button>
+                </div>                                
+            </div>            
+
+            <div id="divPhotoResult" class="form-group" hidden>
+                <div id="divAddress">
+                    <label for="txtAddress">Address in Holochain DNA</label>
+                    <input class="form-control" id="txtAddress" readonly>
+                </div>
+
+                <div id="divLongUrl">
+                    <label for="longUrl">Url</label>
+                    <div class="well well-sm">
+                        <a id="longUrl" href="#"></a>
+                    </div>                
+                </div>
+
+                <!-- <label for="shortUrl">Short Url</label>                
+                <div class="well well-sm">
+                    <a id="shortUrl" href="#"></a>
+                </div> -->                
+
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+            
+                <label for="txtName">Name</label>                                
+                <input class="form-control" id="txtName" readonly />                
+
+                <label for="imgPreview">Preview</label>                
+                <div class="well well-sm">
+                    <img id="imgPreview" style="width: 100%;"/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+        
+    <div class="loaderDiv">
+        <div class="loader centerDiv"></div>
+    </div>
+    
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e2cba3b1578b243"></script>
+
+  </body>
+</html>

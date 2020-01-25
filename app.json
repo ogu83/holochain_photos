@@ -1,0 +1,14 @@
+{
+  "name": "Holochain Photos",
+  "description": "A Holochain Photo Upload, Download and Sharing App",
+  "authors": [
+    {
+      "identifier": "Oguz Koroglu <oguzkoroglu@gmail.com.com>",
+      "public_key_source": "",
+      "signature": ""
+    }
+  ],
+  "version": "0.1.0",
+  "dht": {},
+  "properties": null
+}
