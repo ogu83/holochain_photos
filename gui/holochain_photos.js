@@ -52,7 +52,17 @@ $(document).ready(function() {
     $("#btnUpload").on("click", onUpload);
     $("#btnNew").on("click", onNew);
     $("#btnClear").on("click", onClear);
+    $("#btnSourceCode").on("click", onSorceCode);
+    $("#btnDonate").on("click", onDonate);        
 });
+
+function onDonate() {
+    window.location.href = "/donate.html";
+}
+
+function onSorceCode() {
+    window.location.href = "https://github.com/ogu83/holochain_photos";
+}
 
 function onNew() {
     var origin = window.location.origin;        
