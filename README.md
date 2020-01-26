@@ -1,6 +1,6 @@
 # Holochain Photos
 
-A web application that can upload, preview and share photos in holochain.Demo Site : http://hcphotos.westus.cloudapp.azure.com/
+A web application that can upload, preview and share photos in holochain. Demo Site : http://hcphotos.westus.cloudapp.azure.com/
 
 ## Getting Started
 
