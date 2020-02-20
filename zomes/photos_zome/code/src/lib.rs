@@ -8,10 +8,12 @@ extern crate serde_derive;
 extern crate serde_json;
 #[macro_use]
 extern crate holochain_json_derive;
+use hdk::prelude::LinkMatch;
 
 use hdk::{
     entry_definition::ValidatingEntryType,
     error::ZomeApiResult,
+    AGENT_ADDRESS,
 };
 use hdk::holochain_core_types::{
     entry::Entry,
@@ -34,10 +36,10 @@ use hdk_proc_macros::zome;
 // This is a sample zome that defines an entry type "MyEntry" that can be committed to the
 // agent's chain via the exposed function create_my_entry
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
+#[derive(Serialize, Deserialize, Debug, self::DefaultJson,Clone)]
 pub struct Photo {
     name: String,
-    data: String    
+    data: String
 }
 
 #[zome]
@@ -64,7 +66,19 @@ mod photos_zome {
             },
             validation: | _validation_data: hdk::EntryValidationData<Photo>| {
                 Ok(())
-            }
+            },
+            links: [
+              from!( // to query all the courses of a user(all courses that a user is the teacher or owner of)
+                  "%agent_id",
+                  link_type: "user->photos2",
+                  validation_package: || {
+                      hdk::ValidationPackageDefinition::Entry
+                  }              ,
+                  validation: | _validation_data: hdk::LinkValidationData | {
+                    Ok(())
+                  }
+              )
+            ]
         )
     }
 
@@ -72,6 +86,9 @@ mod photos_zome {
     fn create_photo(photo: Photo) -> ZomeApiResult<Address> {
         let entry = Entry::App("photo".into(), photo.into());
         let address = hdk::commit_entry(&entry)?;
+
+        hdk::link_entries(&AGENT_ADDRESS, &address, "user->photos2", "")?;
+
         Ok(address)
     }
 
@@ -79,6 +96,18 @@ mod photos_zome {
     fn get_photo(address: Address) -> ZomeApiResult<Photo> {
         // hdk::get_entry(&address)
         hdk::utils::get_as_type(address)
+    }
+
+    #[zome_fn("hc_public")]
+    fn get_photos() -> ZomeApiResult<Vec<Address>> {
+      let photo_links = hdk::get_links(
+        &AGENT_ADDRESS,
+        LinkMatch::Exactly("user->photos2"),
+        LinkMatch::Any,
+      )?;
+      hdk::debug("write a message to the logs");
+
+      Ok(photo_links.addresses())
     }
 
     #[zome_fn("hc_public")]
