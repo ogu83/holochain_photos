@@ -36,7 +36,7 @@ use hdk_proc_macros::zome;
 // This is a sample zome that defines an entry type "MyEntry" that can be committed to the
 // agent's chain via the exposed function create_my_entry
 
-#[derive(Serialize, Deserialize, Debug, self::DefaultJson,Clone)]
+#[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 pub struct Photo {
     name: String,
     data: String
@@ -105,7 +105,7 @@ mod photos_zome {
         LinkMatch::Exactly("user->photos2"),
         LinkMatch::Any,
       )?;
-      hdk::debug("write a message to the logs");
+      hdk::debug("write a message to the logs")?;
 
       Ok(photo_links.addresses())
     }

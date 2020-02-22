@@ -200,7 +200,11 @@ function get_photos() {
   $(".loaderDiv").show();
   console.log("getting photos");
   holochain_connection.then(({ callZome, close }) => {
-    callZome("test-instance", "photos_zome", "get_photos")().then(result => {
+    callZome(
+      "test-instance",
+      "photos_zome",
+      "get_photos"
+    )({}).then(result => {
       console.log({ result });
       get_photos_callback(result);
     });
