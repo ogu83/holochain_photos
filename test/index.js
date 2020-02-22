@@ -2,22 +2,29 @@
 /// See the tryorama README [https://github.com/holochain/tryorama]
 /// for a potentially more accurate example
 
-const path = require('path')
+const path = require("path");
 
-const { Orchestrator, Config, combine, singleConductor, localOnly, tapeExecutor } = require('@holochain/tryorama')
+const {
+  Orchestrator,
+  Config,
+  combine,
+  singleConductor,
+  localOnly,
+  tapeExecutor
+} = require("@holochain/tryorama");
 
-process.on('unhandledRejection', error => {
+process.on("unhandledRejection", error => {
   // Will print "unhandledRejection err is not defined"
-  console.error('got unhandledRejection:', error);
+  console.error("got unhandledRejection:", error);
 });
 
-const dnaPath = path.join(__dirname, "../dist/holochain_photos.dna.json")
+const dnaPath = path.join(__dirname, "../dist/holochain_photos.dna.json");
 
 const orchestrator = new Orchestrator({
   middleware: combine(
     // use the tape harness to run the tests, injects the tape API into each scenario
     // as the second argument
-    tapeExecutor(require('tape')),
+    tapeExecutor(require("tape")),
 
     // specify that all "players" in the test are on the local machine, rather than
     // on remote machines
@@ -27,28 +34,49 @@ const orchestrator = new Orchestrator({
     // for in-memory testing purposes.
     // Remove this middleware for other "real" network types which can actually
     // send messages across conductors
-    singleConductor,
-  ),
-})
+    singleConductor
+  )
+});
 
-const dna = Config.dna(dnaPath, 'scaffold-test')
-const conductorConfig = Config.gen({myInstanceName: dna})
+const dna = Config.dna(dnaPath, "scaffold-test");
+const conductorConfig = Config.gen({ myInstanceName: dna });
 
-orchestrator.registerScenario("description of example test", async (s, t) => {
+const PHOTOS_ZOME = "photos_zome";
 
-  const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
+orchestrator.registerScenario("store and get photos", async (s, t) => {
+  const { alice, bob } = await s.players(
+    { alice: conductorConfig, bob: conductorConfig },
+    true
+  );
 
   // Make a call to a Zome function
   // indicating the function, and passing it an input
-  const addr = await alice.call("myInstanceName", "my_zome", "create_my_entry", {"entry" : {"content":"sample content"}})
+  const addr = await alice.call("myInstanceName", PHOTOS_ZOME, "create_photo", {
+    entry: { name: "sample photo", data: "somebinary" }
+  });
 
   // Wait for all network activity to settle
-  await s.consistency()
+  await s.consistency();
 
-  const result = await bob.call("myInstanceName", "my_zome", "get_my_entry", {"address": addr.Ok})
+  const result = await bob.call("myInstanceName", PHOTOS_ZOME, "get_photo", {
+    address: addr.Ok
+  });
 
   // check for equality of the actual and expected results
-  t.deepEqual(result, { Ok: { App: [ 'my_entry', '{"content":"sample content"}' ] } })
-})
+  t.deepEqual(result, {
+    Ok: { App: ["photo", '{"name":"sample photo","data":"somebinary"}'] }
+  });
+});
 
-orchestrator.run()
+orchestrator.registerScenario("get photos", async (s, t) => {
+  const { alice } = await s.players({ alice: conductorConfig }, true);
+  const addresses = await alice.call(
+    "myInstanceName",
+    PHOTOS_ZOME,
+    "get_photos",
+    {}
+  );
+  console.log(addresses);
+});
+
+orchestrator.run();
