@@ -10,7 +10,7 @@ test_agent = true
 
 [[dnas]]
 file = 'dist/holochain_photos.dna.json'
-hash = 'QmYM4HuzPHxcUzBNtoLMK9KN92YBxpJjkaszsScJu5yw9A'
+hash = 'QmeexZcXHNM9Yh6HV47FnN1FGnHN8Yb6uaUEi2i6MxySjH'
 id = '__holochain_photos'
 
 [[instances]]

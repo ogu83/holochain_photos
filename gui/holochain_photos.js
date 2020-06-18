@@ -1,8 +1,8 @@
-var url = "ws://hcphotos.westus.cloudapp.azure.com:50000";
-if (url == undefined)
+//var url = "ws://hcphotos.westus.cloudapp.azure.com:50000";
+//if (url == undefined)
     var holochain_connection = holochainclient.connect();
-else
-    var holochain_connection = holochainclient.connect({ url: url });
+//else
+//    var holochain_connection = holochainclient.connect({ url: url });
 
 var maxSize = 5*1024*1024;
 

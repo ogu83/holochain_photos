@@ -3,7 +3,7 @@ bridges = []
 [[instances]]
 name = "holochain_photos"
 id = "__holochain_photos"
-dna_hash = "QmYM4HuzPHxcUzBNtoLMK9KN92YBxpJjkaszsScJu5yw9A"
+dna_hash = "QmeexZcXHNM9Yh6HV47FnN1FGnHN8Yb6uaUEi2i6MxySjH"
 uri = "file:dist/holochain_photos.dna.json" 
 
 [[UIs]]
