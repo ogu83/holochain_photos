@@ -1,4 +1,6 @@
+.cargo/
 dist/
 node_modules/
 target/
 .hc
+*.crate
